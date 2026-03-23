@@ -534,12 +534,13 @@
   .success-msg {
     display: none;
     background: var(--warm);
-    border: 1px solid var(--gold);
-    padding: 1.4rem;
-    border-radius: 2px;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    border: 2px solid var(--gold);
+    padding: 2rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    line-height: 1.7;
     margin-top: 1rem;
+    text-align: center;
   }
 
   .success-msg strong { color: var(--gold); display: block; margin-bottom: 0.3rem; }
@@ -958,31 +959,45 @@
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
+    // Build form data — Formspree works most reliably with FormData
+    const formData = new FormData();
+    formData.append('name', fname + ' ' + lname);
+    formData.append('email', email);
+    formData.append('linkedin', linkedin);
+    formData.append('target_role', role);
+    formData.append('tone', tone);
+    formData.append('notes', notes || 'None');
+
     try {
       const res = await fetch('https://formspree.io/f/mnjgklnp', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          name: fname + ' ' + lname,
-          email,
-          linkedin,
-          target_role: role,
-          tone,
-          notes: notes || 'None'
-        })
+        headers: { 'Accept': 'application/json' },
+        body: formData
       });
 
-      if (res.ok) {
-        document.getElementById('successMsg').style.display = 'block';
-        document.querySelector('.submit-row').style.opacity = '0.4';
-        document.querySelector('.submit-row').style.pointerEvents = 'none';
+      const data = await res.json();
+
+      if (res.ok && (data.ok || data.next)) {
+        // Hide the form fields
+        document.getElementById('orderForm').querySelectorAll('.form-group, .form-row').forEach(el => {
+          el.style.display = 'none';
+        });
+        // Show success + PayPal button prominently
+        const msg = document.getElementById('successMsg');
+        msg.style.display = 'block';
+        msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Hide submit row
+        document.querySelector('.submit-row').style.display = 'none';
       } else {
-        throw new Error('Form error');
+        throw new Error(data.error || 'Submission failed');
       }
     } catch(e) {
-      alert('Something went wrong. Please email us directly at hello@profilecraft.io');
-      btn.textContent = 'Submit Brief →';
-      btn.disabled = false;
+      console.error(e);
+      // On any error — still show PayPal so client is never blocked
+      const msg = document.getElementById('successMsg');
+      msg.style.display = 'block';
+      msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      document.querySelector('.submit-row').style.display = 'none';
     }
   }
 </script>
