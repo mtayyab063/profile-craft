@@ -599,6 +599,30 @@
     .form-row { grid-template-columns: 1fr; }
   }
 </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W0DDRYEEXG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W0DDRYEEXG');
+
+  // Track form submission as a conversion event
+  function trackFormSubmit() {
+    gtag('event', 'form_submit', {
+      'event_category': 'Order',
+      'event_label': 'Profile Makeover Brief Submitted'
+    });
+  }
+
+  // Track PayPal button click
+  function trackPayPalClick() {
+    gtag('event', 'paypal_click', {
+      'event_category': 'Payment',
+      'event_label': 'PayPal Payment Initiated'
+    });
+  }
+</script>
 </head>
 <body>
 
@@ -875,7 +899,7 @@
       <div class="success-msg" id="successMsg">
         <strong>✓ Brief received!</strong>
         Thank you — your brief has been received! To confirm your spot, please complete your payment below.<br><br>
-        <a href="https://paypal.me/mtayyab063/19" target="_blank" style="display:inline-block;background:#003087;color:white;padding:0.7rem 1.6rem;border-radius:4px;text-decoration:none;font-size:0.9rem;font-weight:500;margin:0.5rem 0;">Pay $19 via PayPal →</a><br><br>
+        <a href="https://paypal.me/mtayyab063/19" target="_blank" onclick="trackPayPalClick()" style="display:inline-block;background:#003087;color:white;padding:0.7rem 1.6rem;border-radius:4px;text-decoration:none;font-size:0.9rem;font-weight:500;margin:0.5rem 0;">Pay $19 via PayPal →</a><br><br>
         Once payment is confirmed, your rewritten profile will be in your inbox within 24 hours. Check your spam folder if you don't hear back.
       </div>
     </div>
@@ -978,6 +1002,7 @@
       const data = await res.json();
 
       if (res.ok && (data.ok || data.next)) {
+        trackFormSubmit();
         // Hide the form fields
         document.getElementById('orderForm').querySelectorAll('.form-group, .form-row').forEach(el => {
           el.style.display = 'none';
