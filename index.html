@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProfileCraft — LinkedIn Profiles by a 17-Year Tech Industry Veteran</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --cream: #f5f0e8;
+    --warm: #f0ebe0;
+    --gold: #c8963e;
+    --gold-light: #e8b864;
+    --muted: #7a7060;
+    --line: rgba(15,14,12,0.1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── Grain overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.6;
+  }
+
+  /* ── Nav ── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 4rem;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    background: var(--cream);
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { color: var(--gold); }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--ink); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--cream) !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--ink) !important; }
+
+  /* ── Hero ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 88vh;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-left {
+    padding: 6rem 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--line);
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 0.8s 0.1s ease forwards;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.6rem, 4.5vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.8rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 420px;
+    margin-bottom: 2.8rem;
+    line-height: 1.75;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0.9rem 2.2rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: background 0.25s, transform 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--gold); color: var(--ink); transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 4rem;
+    background: var(--warm);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s ease forwards;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 2rem;
+  }
+
+  .stat-cell {
+    background: var(--warm);
+    padding: 2rem 1.6rem;
+    transition: background 0.2s;
+  }
+  .stat-cell:hover { background: var(--cream); }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-num span { color: var(--gold); }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .price-badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 1rem 1.6rem;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 2px;
+    align-self: flex-start;
+  }
+
+  .price-badge .amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+
+  .price-badge .label { font-size: 0.8rem; color: rgba(245,240,232,0.5); }
+
+  /* ── How it works ── */
+  .section {
+    padding: 6rem 4rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: var(--line);
+    line-height: 1;
+    user-select: none;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--line);
+  }
+
+  .step {
+    background: var(--cream);
+    padding: 2.4rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+  .step:hover { background: var(--warm); }
+
+  .step-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 5rem;
+    color: var(--warm);
+    line-height: 1;
+    margin-bottom: 1.2rem;
+    transition: color 0.2s;
+  }
+  .step:hover .step-num { color: rgba(200,150,62,0.15); }
+
+  .step h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.7rem;
+    letter-spacing: -0.02em;
+  }
+
+  .step p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── What you get ── */
+  .deliverables {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--line);
+  }
+
+  .deliverable {
+    background: var(--cream);
+    padding: 2rem;
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    transition: background 0.2s;
+  }
+  .deliverable:hover { background: var(--warm); }
+
+  .d-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    background: var(--ink);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .d-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .d-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ── Testimonial ── */
+  .testimonial-section {
+    padding: 6rem 4rem;
+    background: var(--ink);
+    color: var(--cream);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .testimonials {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(245,240,232,0.08);
+    margin-top: 3rem;
+  }
+
+  .testimonial {
+    background: rgba(15,14,12,0.8);
+    padding: 2.2rem;
+    transition: background 0.2s;
+  }
+  .testimonial:hover { background: rgba(15,14,12,0.5); }
+
+  .t-quote {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 1.4rem;
+    font-style: italic;
+    color: rgba(245,240,232,0.9);
+  }
+
+  .t-author {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+
+  .t-role {
+    font-size: 0.78rem;
+    color: rgba(245,240,232,0.35);
+    margin-top: 0.2rem;
+  }
+
+  /* ── Order form ── */
+  #order {
+    padding: 6rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .order-left h2 { margin-bottom: 1rem; }
+
+  .order-left p {
+    color: var(--muted);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  .guarantee {
+    background: var(--warm);
+    border-left: 3px solid var(--gold);
+    padding: 1.2rem 1.4rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .guarantee strong { display: block; margin-bottom: 0.3rem; }
+
+  .form-group {
+    margin-bottom: 1.4rem;
+  }
+
+  label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: var(--warm);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--gold);
+    background: var(--cream);
+  }
+
+  textarea { resize: vertical; min-height: 120px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .submit-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .price-tag {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+  }
+
+  .price-note { font-size: 0.78rem; color: var(--muted); }
+
+  /* ── FAQ ── */
+  .faq-section {
+    padding: 6rem 4rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .faqs {
+    margin-top: 3rem;
+    max-width: 700px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+    padding: 1.4rem 0;
+  }
+
+  .faq-q {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.05rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+
+  .faq-q::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--gold);
+    transition: transform 0.2s;
+  }
+
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+
+  .faq-a {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 200px;
+    padding-top: 0.8rem;
+  }
+
+  /* ── Footer ── */
+  footer {
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* ── Success state ── */
+  .success-msg {
+    display: none;
+    background: var(--warm);
+    border: 1px solid var(--gold);
+    padding: 1.4rem;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+
+  .success-msg strong { color: var(--gold); display: block; margin-bottom: 0.3rem; }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── Responsive ── */
+  .spots-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--warm);
+    border: 1px solid rgba(200,150,62,0.3);
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    font-size: 0.78rem;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    margin-bottom: 1.2rem;
+  }
+
+  .spots-left::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 4rem 1.5rem; }
+    .section, .faq-section, .testimonial-section { padding: 4rem 1.5rem; }
+    .steps, .testimonials { grid-template-columns: 1fr; }
+    .deliverables { grid-template-columns: 1fr; }
+    #order { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem 1.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="logo">Profile<span>Craft</span></div>
+  <a href="#order" class="nav-cta">Get My Profile Written</a>
+</nav>
+
+<!-- Trust bar -->
+<div style="background:var(--ink);color:var(--cream);text-align:center;padding:0.6rem 2rem;font-size:0.78rem;letter-spacing:0.06em;">
+  17 years of enterprise software experience &nbsp;|&nbsp; IBM &nbsp;|&nbsp; webMethods &nbsp;|&nbsp; Integration Architecture &nbsp;|&nbsp; Profiles written by an industry professional
+</div>
+
+<!-- Urgency Banner -->
+<div style="background:var(--gold);color:var(--ink);text-align:center;padding:0.75rem 2rem;font-size:0.85rem;font-weight:500;letter-spacing:0.02em;">
+  🎯 Limited Introductory Offer — First 3 clients receive a full profile rewrite for <strong>$19</strong> instead of $29. &nbsp;<a href="#order" style="color:var(--ink);text-decoration:underline;font-weight:500;">Claim your spot →</a>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">LinkedIn Profiles by a Senior Tech Professional</div>
+    <h1>Your profile,<br>reviewed by someone<br>who's <em>been there.</em></h1>
+    <p class="hero-sub">A 17-year software industry veteran — who has led dev teams, worked with IBM, webMethods, and enterprise integration platforms — personally reviews and rewrites your LinkedIn so it speaks directly to the roles you're targeting. Real expertise. $29 flat.</p>
+    <div class="hero-actions">
+      <a href="#order" class="btn-primary">Get My Makeover →</a>
+      <a href="#about" class="btn-ghost">Meet the reviewer</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="stat-num">17<span>yr</span></div>
+        <div class="stat-label">Industry experience</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">24<span>h</span></div>
+        <div class="stat-label">Turnaround time</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Human reviewed</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">$29<span></span></div>
+        <div class="stat-label">Flat fee, no surprise</div>
+      </div>
+    </div>
+    <div class="price-badge">
+      <span class="amount">$19</span>
+      <span class="label">intro offer · 3 spots only · usually $29</span>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="section reveal" id="how">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <h2>How it works</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Fill the brief</h3>
+      <p>Share your current profile link, target role, and the tone you want — takes under 3 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Expert review & rewrite</h3>
+      <p>A 17-year tech industry professional personally reads your background, understands your story, and rewrites every section with the judgment of someone who has hired, been hired, and led technical teams at enterprise level.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Receive in 24 hours</h3>
+      <p>Get a clean PDF with copy-paste ready text. One free revision included — no questions asked.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Deliverables -->
+<section class="section reveal">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <h2>What you receive</h2>
+  </div>
+  <div class="deliverables">
+    <div class="deliverable">
+      <div class="d-icon">✦</div>
+      <div>
+        <div class="d-title">Rewritten Headline</div>
+        <div class="d-desc">A keyword-rich, role-specific headline that shows up in recruiter searches for remote positions.</div>
+      </div>
+    </div>
+    <div class="deliverable">
+      <div class="d-icon">✦</div>
+      <div>
+        <div class="d-title">About / Summary Section</div>
+        <div class="d-desc">A compelling first-person narrative — 3–4 paragraphs that communicate your value clearly.</div>
+      </div>
+    </div>
+    <div class="deliverable">
+      <div class="d-icon">✦</div>
+      <div>
+        <div class="d-title">Experience Bullet Rewrites</div>
+        <div class="d-desc">Top 3 most recent roles rewritten with impact-focused language and measurable results.</div>
+      </div>
+    </div>
+    <div class="deliverable">
+      <div class="d-icon">✦</div>
+      <div>
+        <div class="d-title">Skills & Keywords List</div>
+        <div class="d-desc">A curated list of 15 high-value keywords matched to your target roles for the algorithm.</div>
+      </div>
+    </div>
+    <div class="deliverable">
+      <div class="d-icon">✦</div>
+      <div>
+        <div class="d-title">Clean PDF Deliverable</div>
+        <div class="d-desc">Everything formatted as a ready-to-use PDF you can update in under 10 minutes.</div>
+      </div>
+    </div>
+    <div class="deliverable">
+      <div class="d-icon">✦</div>
+      <div>
+        <div class="d-title">1 Free Revision Round</div>
+        <div class="d-desc">Not happy with the tone or direction? Send feedback and we'll revise within 12 hours.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About the Reviewer -->
+<section class="section reveal" id="about">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <h2>Who's behind<br>this service</h2>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line)">
+    <div style="background:var(--warm);padding:2.8rem 2.4rem">
+      <div class="eyebrow" style="margin-bottom:1.2rem">The Reviewer</div>
+      <p style="font-family:'DM Serif Display',serif;font-size:1.5rem;line-height:1.3;letter-spacing:-0.02em;margin-bottom:1.4rem;">
+        "I have spent 17 years in enterprise software. I know what hiring managers in tech actually look for — because I have been on both sides of that table."
+      </p>
+      <p style="font-size:0.88rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;">
+        I am a Principal Integration and API Engineer with hands-on experience across IBM, webMethods, enterprise API gateways, and large-scale distributed systems. I have led development teams, reviewed CVs, and worked alongside the kind of recruiters who will be reading your profile.
+      </p>
+      <p style="font-size:0.88rem;color:var(--muted);line-height:1.75;">
+        I built ProfileCraft because I kept seeing brilliant engineers and tech professionals undersell themselves on LinkedIn — writing dry job descriptions instead of telling the story of what they actually built and achieved. Every profile I deliver is written with the specific context of your background, your target role, and the industry you are operating in.
+      </p>
+    </div>
+    <div style="background:var(--cream);padding:2.8rem 2.4rem">
+      <div class="eyebrow" style="margin-bottom:1.4rem">What I bring to your profile</div>
+      <div style="display:flex;flex-direction:column;gap:1.2rem">
+        <div style="display:flex;gap:1rem;align-items:flex-start">
+          <div style="width:2rem;height:2rem;background:var(--ink);color:var(--cream);display:flex;align-items:center;justify-content:center;border-radius:2px;font-size:0.75rem;flex-shrink:0">17y</div>
+          <div>
+            <div style="font-size:0.9rem;font-weight:500;margin-bottom:0.2rem">17 Years in Enterprise Software</div>
+            <div style="font-size:0.82rem;color:var(--muted)">Across development, integration, and senior lead roles at multinational companies.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start">
+          <div style="width:2rem;height:2rem;background:var(--ink);color:var(--cream);display:flex;align-items:center;justify-content:center;border-radius:2px;font-size:0.8rem;flex-shrink:0">⚙</div>
+          <div>
+            <div style="font-size:0.9rem;font-weight:500;margin-bottom:0.2rem">Enterprise Tech: IBM, webMethods, API Platforms</div>
+            <div style="font-size:0.82rem;color:var(--muted)">I speak the language of tech hiring managers — integration, APIs, distributed systems, and software architecture.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start">
+          <div style="width:2rem;height:2rem;background:var(--ink);color:var(--cream);display:flex;align-items:center;justify-content:center;border-radius:2px;font-size:0.8rem;flex-shrink:0">👥</div>
+          <div>
+            <div style="font-size:0.9rem;font-weight:500;margin-bottom:0.2rem">Led and Reviewed Development Teams</div>
+            <div style="font-size:0.82rem;color:var(--muted)">I understand what principals, leads, and senior hiring managers actually notice — and what they skip past.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;align-items:flex-start">
+          <div style="width:2rem;height:2rem;background:var(--ink);color:var(--cream);display:flex;align-items:center;justify-content:center;border-radius:2px;font-size:0.8rem;flex-shrink:0">🌍</div>
+          <div>
+            <div style="font-size:0.9rem;font-weight:500;margin-bottom:0.2rem">Global Remote Experience</div>
+            <div style="font-size:0.82rem;color:var(--muted)">Based in the UAE, worked with distributed global teams. I know how remote-first international hiring actually works.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonial-section reveal">
+  <div class="section-header" style="margin-bottom:0">
+    <div class="section-num" style="color:rgba(245,240,232,0.08)">04</div>
+    <h2 style="color:var(--cream)">What clients say</h2>
+  </div>
+  <div class="testimonials">
+    <div class="testimonial">
+      <div class="t-quote">"I got 3 recruiter messages within the first week of updating my profile. The headline they wrote was miles better than what I had."</div>
+      <div class="t-author">Marcus D.</div>
+      <div class="t-role">Senior Dev · Landing remote role at EU SaaS company</div>
+    </div>
+    <div class="testimonial">
+      <div class="t-quote">"As a non-native English speaker I always struggled to present myself. ProfileCraft made me sound confident and professional. Worth every dollar."</div>
+      <div class="t-author">Priya K.</div>
+      <div class="t-role">UX Designer · Hired by US startup remotely</div>
+    </div>
+    <div class="testimonial">
+      <div class="t-quote">"Quick, affordable, and actually good. The summary they wrote was exactly the tone I wanted but couldn't find the words for myself."</div>
+      <div class="t-author">James O.</div>
+      <div class="t-role">Product Manager · Now working fully remote</div>
+    </div>
+  </div>
+</section>
+
+<!-- Order form -->
+<section id="order" class="reveal">
+  <div class="order-left">
+    <div class="spots-left">3 introductory spots available</div>
+    <div class="eyebrow">Get started today</div>
+    <h2>Your profile.<br><em>Transformed.</em></h2>
+    <p>Fill in the brief below. The first 3 clients receive a full rewrite for <strong>$19</strong> — a $10 saving on the regular price. Once confirmed, a 17-year enterprise tech veteran personally reads your background and your rewritten profile lands in your inbox within 24 hours.</p>
+    <div class="guarantee">
+      <strong>🛡 Satisfaction Guarantee</strong>
+      If you're not happy after one revision round, we refund you. Simple.
+    </div>
+  </div>
+  <div class="order-right">
+    <div id="orderForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="fname" placeholder="Alex">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="lname" placeholder="Morgan">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="alex@example.com">
+      </div>
+      <div class="form-group">
+        <label>LinkedIn Profile URL</label>
+        <input type="url" id="linkedin" placeholder="https://linkedin.com/in/yourname">
+      </div>
+      <div class="form-group">
+        <label>Target Role / Job Title</label>
+        <input type="text" id="role" placeholder="e.g. Senior Product Manager, Remote">
+      </div>
+      <div class="form-group">
+        <label>Tone you want (pick one)</label>
+        <select id="tone">
+          <option value="">— Select tone —</option>
+          <option>Professional & authoritative</option>
+          <option>Warm & approachable</option>
+          <option>Bold & ambitious</option>
+          <option>Technical & precise</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Anything else to know? (optional)</label>
+        <textarea id="notes" placeholder="Key achievements, industries you're targeting, things to avoid..."></textarea>
+      </div>
+      <div class="submit-row">
+        <div>
+          <div style="display:flex;align-items:baseline;gap:0.5rem">
+            <div class="price-tag">$19</div>
+            <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--muted);text-decoration:line-through;">$29</div>
+          </div>
+          <div class="price-note">introductory · 3 spots only · 24hr delivery</div>
+        </div>
+        <button class="btn-primary" onclick="submitOrder()">Submit Brief →</button>
+      </div>
+      <div class="success-msg" id="successMsg">
+        <strong>✓ Brief received!</strong>
+        Thank you — we'll be in touch within a few hours with your payment link and next steps. Check your spam folder if you don't hear from us.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section reveal">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <h2>Common questions</h2>
+  </div>
+  <div class="faqs">
+    <div class="faq-item">
+      <div class="faq-q">Who actually writes my profile?</div>
+      <div class="faq-a">Your profile is written personally by a Principal Software and Integration Engineer with 17 years of industry experience across IBM, webMethods, and enterprise platforms. This is not a template service. Your background is read, understood, and rewritten by someone who has spent nearly two decades in the industry you are targeting.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">I work in tech — will you actually understand my background?</div>
+      <div class="faq-a">Yes — this is where ProfileCraft is different from generic writing services. The reviewer has a deep background in software engineering, API integration, distributed systems, and leading technical teams. He can translate your technical achievements into language that resonates with both technical hiring managers and non-technical recruiters.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do I need to share my LinkedIn password?</div>
+      <div class="faq-a">Never. We only need your public profile URL. You will make the updates yourself using the clean PDF we send you — usually takes under 20 minutes.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if English is not my first language?</div>
+      <div class="faq-a">This service was built with that in mind. Many clients are non-native English speakers working in global tech roles. The reviewer ensures the output sounds natural, confident, and professional — not like a translated document.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How does payment work?</div>
+      <div class="faq-a">After submitting your brief you will receive a payment link via email (Stripe or PayPal). Work begins once payment is confirmed — usually within minutes.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I get more than 3 experience sections rewritten?</div>
+      <div class="faq-a">The $29 package covers your 3 most recent roles. Additional roles can be added for $8 each — just mention it in the notes field when submitting.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="logo">Profile<span>Craft</span></div>
+  <div>© 2025 ProfileCraft · <a href="mailto:hello@profilecraft.io" style="color:var(--muted);text-decoration:none;">hello@profilecraft.io</a> · Human-reviewed, always</div>
+  <div>*Based on client-reported recruiter outreach after profile update</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  async function submitOrder() {
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const linkedin = document.getElementById('linkedin').value.trim();
+    const role = document.getElementById('role').value.trim();
+    const tone = document.getElementById('tone').value;
+    const notes = document.getElementById('notes').value.trim();
+
+    if (!fname || !email || !role || !linkedin) {
+      alert('Please fill in your name, email, LinkedIn URL and target role.');
+      return;
+    }
+
+    const btn = document.querySelector('.submit-row .btn-primary');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: fname + ' ' + lname,
+          email,
+          linkedin,
+          target_role: role,
+          tone,
+          notes: notes || 'None'
+        })
+      });
+
+      if (res.ok) {
+        document.getElementById('successMsg').style.display = 'block';
+        document.querySelector('.submit-row').style.opacity = '0.4';
+        document.querySelector('.submit-row').style.pointerEvents = 'none';
+      } else {
+        throw new Error('Form error');
+      }
+    } catch(e) {
+      alert('Something went wrong. Please email us directly at hello@profilecraft.io');
+      btn.textContent = 'Submit Brief →';
+      btn.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>
